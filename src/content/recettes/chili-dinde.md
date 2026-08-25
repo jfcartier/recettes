@@ -11,24 +11,52 @@ fibres: 11
 congelable: true
 star: true
 note: "Star du meal prep — congèle 3 mois. Macros sans riz."
+ingredients:
+  - qty: 900
+    unit: "g"
+    item: "dinde hachée"
+  - qty: 2
+    unit: "tasse"
+    unitPluriel: "tasses"
+    item: "haricots noirs, rincés et égouttés"
+  - qty: 2
+    unit: "tasse"
+    unitPluriel: "tasses"
+    item: "haricots rouges, rincés et égouttés"
+  - qty: 800
+    unit: "g"
+    item: "tomates en dés en conserve"
+  - qty: 400
+    unit: "ml"
+    item: "sauce tomate (passata)"
+  - qty: 1
+    unit: "gros"
+    item: "oignon, haché"
+  - qty: 1
+    item: "poivron rouge, haché"
+  - qty: 3
+    unit: "gousse"
+    unitPluriel: "gousses"
+    item: "d'ail, hachées"
+  - qty: 1
+    unit: "c. à soupe"
+    item: "huile d'olive"
+  - qty: 2
+    unit: "c. à soupe"
+    item: "poudre de chili"
+  - qty: 1
+    unit: "c. à soupe"
+    item: "cumin moulu"
+  - qty: 1
+    unit: "c. à thé"
+    item: "paprika fumé"
+  - qty: 1
+    unit: "c. à thé"
+    item: "sel"
+  - qty: 250
+    unit: "ml"
+    item: "bouillon de poulet ou eau"
 ---
-
-## Ingrédients
-
-- 900 g dinde hachée
-- 2 tasses haricots noirs, rincés et égouttés
-- 2 tasses haricots rouges, rincés et égouttés
-- 800 g tomates en dés en conserve
-- 400 ml sauce tomate (passata)
-- 1 gros oignon, haché
-- 1 poivron rouge, haché
-- 3 gousses d'ail, hachées
-- 1 c. à soupe huile d'olive
-- 2 c. à soupe poudre de chili
-- 1 c. à soupe cumin moulu
-- 1 c. à thé paprika fumé
-- 1 c. à thé sel
-- 250 ml bouillon de poulet ou eau
 
 ## Préparation
 

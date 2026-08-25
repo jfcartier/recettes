@@ -1,0 +1,169 @@
+---
+interface Ingredient {
+  qty: number;
+  unit?: string;
+  unitPluriel?: string;
+  item: string;
+}
+interface Props {
+  ingredients: Ingredient[];
+  basePortions: number;
+}
+const { ingredients, basePortions } = Astro.props;
+---
+<section class="ingredients">
+  <div class="ingredients-tete">
+    <h2>Ingrédients</h2>
+    <div class="portions-stepper">
+      <span class="portions-mot">Pour</span>
+      <button type="button" class="portions-btn" data-step="-1" aria-label="Diminuer le nombre de portions">−</button>
+      <input
+        type="number"
+        class="portions-input"
+        min="1"
+        max="99"
+        step="1"
+        inputmode="numeric"
+        value={basePortions}
+        data-portions-base={basePortions}
+        aria-label="Nombre de portions"
+      />
+      <button type="button" class="portions-btn" data-step="1" aria-label="Augmenter le nombre de portions">+</button>
+      <span class="portions-mot portions-suffixe">portion(s)</span>
+    </div>
+  </div>
+  <ul class="liste-ingredients">
+    {ingredients.map((ing) => (
+      <li data-qty={ing.qty} data-unit={ing.unit ?? ''} data-unit-pluriel={ing.unitPluriel ?? ing.unit ?? ''}>
+        <span class="ing-qte"></span> <span class="ing-item">{ing.item}</span>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .ingredients { margin: 0 0 34px; }
+  .ingredients-tete {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px 20px;
+  }
+  .ingredients-tete h2 { margin: 0; }
+  .portions-stepper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-sans);
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+  }
+  .portions-btn {
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--ligne);
+    background: var(--surface);
+    color: var(--herbe);
+    border-radius: var(--radius-sm);
+    font-size: 1.05rem;
+    line-height: 1;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color var(--motion-duration) var(--motion-ease),
+                border-color var(--motion-duration) var(--motion-ease);
+  }
+  .portions-btn:hover { border-color: var(--herbe); background: var(--herbe-clair); }
+  .portions-btn:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+  .portions-input {
+    width: 3em;
+    text-align: center;
+    padding: 5px 4px;
+    border: 1px solid var(--ligne);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    font-weight: 600;
+  }
+  .portions-input:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+  .portions-suffixe { color: var(--ink-soft); }
+
+  .liste-ingredients {
+    list-style: none;
+    margin: 16px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+  }
+  .liste-ingredients li {
+    padding: 9px 0;
+    border-bottom: 1px solid var(--ligne);
+    display: flex;
+    gap: 8px;
+  }
+  .liste-ingredients li:last-child { border-bottom: none; }
+  .ing-qte {
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    color: var(--herbe);
+    min-width: 5.5em;
+    flex-shrink: 0;
+  }
+  .ing-item { color: var(--ink); }
+</style>
+
+<script>
+  function arrondirQte(valeur: number, unite: string): number {
+    if (unite === 'g' || unite === 'ml') {
+      return valeur >= 100 ? Math.round(valeur / 5) * 5 : Math.round(valeur);
+    }
+    return Math.round(valeur * 4) / 4;
+  }
+
+  function formaterQte(valeur: number): string {
+    const entier = Math.floor(valeur);
+    const frac = Math.round((valeur - entier) * 100) / 100;
+    const glyphes: Record<string, string> = { '0.25': '¼', '0.5': '½', '0.75': '¾' };
+    const glyphe = glyphes[String(frac)];
+    if (frac === 0) return String(entier);
+    if (glyphe) return entier > 0 ? `${entier} ${glyphe}` : glyphe;
+    return valeur.toFixed(2).replace(/\.?0+$/, '');
+  }
+
+  function initIngredients(section: Element) {
+    const input = section.querySelector<HTMLInputElement>('.portions-input');
+    const liste = section.querySelectorAll<HTMLLIElement>('.liste-ingredients li');
+    if (!input) return;
+    const base = Number(input.dataset.portionsBase) || Number(input.value) || 1;
+
+    function appliquer() {
+      const cible = Math.max(1, Math.round(Number(input!.value) || base));
+      const ratio = cible / base;
+      liste.forEach((li) => {
+        const qteBase = Number(li.dataset.qty);
+        const unite = li.dataset.unit || '';
+        const unitePluriel = li.dataset.unitPluriel || unite;
+        const qte = arrondirQte(qteBase * ratio, unite);
+        const texte = unite ? `${formaterQte(qte)} ${qte > 1 ? unitePluriel : unite}` : formaterQte(qte);
+        const cible2 = li.querySelector('.ing-qte');
+        if (cible2) cible2.textContent = texte;
+      });
+    }
+
+    input.addEventListener('input', appliquer);
+    section.querySelectorAll<HTMLButtonElement>('.portions-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const pas = Number(btn.dataset.step) || 1;
+        input!.value = String(Math.max(1, (Number(input!.value) || base) + pas));
+        appliquer();
+      });
+    });
+
+    appliquer();
+  }
+
+  document.querySelectorAll('.ingredients').forEach(initIngredients);
+</script>

@@ -16,6 +16,12 @@ const recettes = defineCollection({
     tempsMinutes: z.number().optional(),
     star: z.boolean().default(false),  // "Star du meal prep"
     note: z.string().optional(),       // note affichée sous le titre
+    ingredients: z.array(z.object({
+      qty: z.number(),                 // quantité pour `portions` portions
+      unit: z.string().optional(),     // ex: "g", "ml", "tasse", "gousse"
+      unitPluriel: z.string().optional(), // forme au pluriel si irrégulière
+      item: z.string(),                // ex: "dinde hachée"
+    })).optional(),
   }),
 });
 

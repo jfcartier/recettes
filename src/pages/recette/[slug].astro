@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import Ingredients from '../../components/Ingredients.astro';
 
 export async function getStaticPaths() {
   const recettes = await getCollection('recettes');
@@ -35,6 +36,10 @@ const base = import.meta.env.BASE_URL;
       {d.lipides != null && <div class="macro"><div class="v">{d.lipides} g</div><div class="l">lipides</div></div>}
       {d.fibres != null && <div class="macro"><div class="v">{d.fibres} g</div><div class="l">fibres</div></div>}
     </div>
+
+    {d.ingredients && d.ingredients.length > 0 && (
+      <Ingredients ingredients={d.ingredients} basePortions={d.portions} />
+    )}
 
     <div class="contenu">
       <Content />
