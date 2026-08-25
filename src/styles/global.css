@@ -1,24 +1,45 @@
+/* ============================================================
+   Tokens — palette "cuisine" en OKLCH (mode clair/sombre auto),
+   inspirés du système de design du thème Astro Star Scholar.
+   ============================================================ */
 :root {
-  /* Palette "cuisine" — vert herbe, tomate, crème chaude */
-  --bg: #faf6ef;
-  --surface: #ffffff;
-  --ink: #23281f;
-  --ink-soft: #5b6152;
-  --herbe: #3f6b3a;
-  --herbe-clair: #e6efe2;
-  --tomate: #c14b32;
-  --tomate-clair: #f6e4de;
-  --ambre: #d69122;
-  --ambre-clair: #f8ecd2;
-  --ligne: #e7e0d3;
-  --radius: 14px;
-  --shadow: 0 1px 3px rgba(35, 40, 31, 0.06), 0 6px 20px rgba(35, 40, 31, 0.05);
+  color-scheme: light dark;
+
+  --bg:          light-dark(oklch(0.97 0.012 90),  oklch(0.22 0.014 130));
+  --surface:     light-dark(oklch(1    0     0),   oklch(0.27 0.015 130));
+  --ink:         light-dark(oklch(0.27 0.02  130), oklch(0.93 0.01  90));
+  --ink-soft:    light-dark(oklch(0.50 0.03  130), oklch(0.70 0.02  130));
+  --ligne:       light-dark(oklch(0.90 0.012 90),  oklch(1    0     0 / 12%));
+  --ring:        light-dark(oklch(0.47 0.09  145), oklch(0.72 0.10  145));
+
+  --herbe:       light-dark(oklch(0.47 0.09  145), oklch(0.74 0.11  145));
+  --herbe-clair: light-dark(oklch(0.94 0.03  145), oklch(0.32 0.05  145));
+  --tomate:      light-dark(oklch(0.55 0.15  35),  oklch(0.72 0.13  35));
+  --tomate-clair:light-dark(oklch(0.92 0.045 35),  oklch(0.32 0.06  35));
+  --ambre:       light-dark(oklch(0.62 0.13  75),  oklch(0.78 0.12  80));
+  --ambre-clair: light-dark(oklch(0.93 0.05  80),  oklch(0.32 0.06  80));
+  --bleu:        light-dark(oklch(0.53 0.10  230), oklch(0.75 0.09  230));
+  --bleu-clair:  light-dark(oklch(0.92 0.025 230), oklch(0.30 0.05  230));
+  --mauve:       light-dark(oklch(0.50 0.09  305), oklch(0.78 0.08  305));
+  --mauve-clair: light-dark(oklch(0.93 0.03  305), oklch(0.30 0.05  305));
+
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+
+  --radius-sm: 0.4rem;
+  --radius: 0.85rem;
+  --radius-lg: 1.1rem;
+
+  --shadow: 0 1px 3px oklch(0 0 0 / 6%), 0 6px 20px oklch(0 0 0 / 5%);
+
+  --motion-duration: 220ms;
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 * { box-sizing: border-box; }
 
 html {
-  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  font-family: var(--font-serif);
   background: var(--bg);
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
@@ -28,12 +49,19 @@ body { margin: 0; line-height: 1.6; }
 
 .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
 
-a { color: var(--herbe); }
+a {
+  color: var(--herbe);
+  text-decoration-color: color-mix(in oklab, var(--herbe) 40%, transparent);
+  text-underline-offset: 0.15em;
+  transition: color var(--motion-duration) var(--motion-ease),
+              text-decoration-color var(--motion-duration) var(--motion-ease);
+}
+a:hover { text-decoration-color: currentColor; }
 
 /* ---- En-tête ---- */
 .site-head {
   border-bottom: 1px solid var(--ligne);
-  background: linear-gradient(180deg, #fefcf8, var(--bg));
+  background: linear-gradient(180deg, color-mix(in oklab, var(--surface) 60%, transparent), var(--bg));
 }
 .site-head .wrap { padding-top: 34px; padding-bottom: 30px; }
 .site-head h1 {
@@ -48,7 +76,7 @@ a { color: var(--herbe); }
   font-style: italic;
 }
 .eyebrow {
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-sans);
   text-transform: uppercase;
   letter-spacing: 0.18em;
   font-size: 0.72rem;
@@ -73,14 +101,20 @@ a { color: var(--herbe); }
   font-size: 1rem;
   font-family: inherit;
   background: var(--surface);
+  color: var(--ink);
+  transition: border-color var(--motion-duration) var(--motion-ease);
 }
-#recherche:focus { outline: 2px solid var(--herbe); border-color: var(--herbe); }
+#recherche:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-color: var(--herbe);
+}
 
 .filtres {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-sans);
 }
 .filtre {
   padding: 7px 13px;
@@ -90,17 +124,20 @@ a { color: var(--herbe); }
   cursor: pointer;
   font-size: 0.85rem;
   color: var(--ink-soft);
-  transition: all 0.15s;
+  transition: background-color var(--motion-duration) var(--motion-ease),
+              border-color var(--motion-duration) var(--motion-ease),
+              color var(--motion-duration) var(--motion-ease);
 }
 .filtre:hover { border-color: var(--herbe); color: var(--herbe); }
+.filtre:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
 .filtre[aria-pressed="true"] {
   background: var(--herbe);
   border-color: var(--herbe);
-  color: #fff;
+  color: light-dark(oklch(1 0 0), oklch(0.15 0 0));
 }
 
 .compte {
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.85rem;
   color: var(--ink-soft);
   margin: 6px 0 20px;
@@ -114,21 +151,62 @@ a { color: var(--herbe); }
   padding-bottom: 60px;
 }
 .carte {
+  position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
   background: var(--surface);
   border: 1px solid var(--ligne);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   box-shadow: var(--shadow);
   text-decoration: none;
   color: inherit;
-  overflow: hidden;
-  transition: transform 0.15s, box-shadow 0.15s;
+  overflow: clip;
+  transition: transform var(--motion-duration) var(--motion-ease),
+              box-shadow var(--motion-duration) var(--motion-ease),
+              border-color var(--motion-duration) var(--motion-ease);
 }
-.carte:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 8px rgba(35,40,31,0.08), 0 14px 32px rgba(35,40,31,0.10);
+.carte::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(
+      110deg,
+      transparent 20%,
+      color-mix(in oklab, var(--herbe) 80%, transparent) 40%,
+      color-mix(in oklab, var(--tomate) 85%, transparent) 50%,
+      color-mix(in oklab, var(--herbe) 80%, transparent) 60%,
+      transparent 80%
+    )
+    100% 0 / 300% 100%;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-duration) var(--motion-ease);
 }
+@media (hover: hover) and (pointer: fine) {
+  .carte:hover {
+    transform: translateY(-3px);
+    border-color: transparent;
+    box-shadow: 0 4px 8px oklch(0 0 0 / 8%), 0 14px 32px oklch(0 0 0 / 10%);
+  }
+  .carte:hover::before {
+    opacity: 1;
+    animation: carte-bordure 2.4s linear infinite;
+  }
+  .carte:hover .carte-titre { color: var(--herbe); }
+}
+@keyframes carte-bordure {
+  from { background-position: 100% 0; }
+  to { background-position: -50% 0; }
+}
+.carte > * { position: relative; z-index: 1; }
 .carte-haut {
   padding: 18px 18px 12px;
   display: flex;
@@ -136,9 +214,14 @@ a { color: var(--herbe); }
   gap: 12px;
 }
 .carte-emoji { font-size: 2rem; line-height: 1; }
-.carte-titre { font-size: 1.22rem; margin: 2px 0 2px; letter-spacing: -0.01em; }
+.carte-titre {
+  font-size: 1.22rem;
+  margin: 2px 0 2px;
+  letter-spacing: -0.01em;
+  transition: color var(--motion-duration) var(--motion-ease);
+}
 .carte-cuisine {
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.76rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -157,12 +240,12 @@ a { color: var(--herbe); }
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-sans);
 }
 
 /* ---- Badges ---- */
 .badge {
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.74rem;
   font-weight: 600;
   padding: 3px 9px;
@@ -171,21 +254,22 @@ a { color: var(--herbe); }
   align-items: center;
   gap: 4px;
 }
-.badge-kcal { background: var(--ambre-clair); color: #8a5c10; }
+.badge-kcal { background: var(--ambre-clair); color: color-mix(in oklab, var(--ambre) 65%, var(--ink)); }
 .badge-prot { background: var(--herbe-clair); color: var(--herbe); }
-.badge-gel  { background: #e2eef4; color: #2c6488; }
+.badge-gel  { background: var(--bleu-clair); color: var(--bleu); }
 .badge-star { background: var(--tomate-clair); color: var(--tomate); }
-.badge-temps { background: #efe9f2; color: #6b4a7a; }
+.badge-temps { background: var(--mauve-clair); color: var(--mauve); }
 
 /* ---- Page recette ---- */
 .recette { padding: 30px 0 70px; }
 .retour {
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.85rem;
   text-decoration: none;
   color: var(--ink-soft);
   display: inline-block;
   margin-bottom: 22px;
+  transition: color var(--motion-duration) var(--motion-ease);
 }
 .retour:hover { color: var(--herbe); }
 .recette h1 { font-size: clamp(1.9rem, 4vw, 2.6rem); margin: 0 0 6px; letter-spacing: -0.02em; }
@@ -205,10 +289,10 @@ a { color: var(--herbe); }
 .macro { background: var(--surface); padding: 14px 10px; text-align: center; }
 .macro .v {
   font-size: 1.35rem; font-weight: 700; color: var(--herbe);
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-sans);
 }
 .macro .l {
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em;
   color: var(--ink-soft); margin-top: 3px;
 }
@@ -223,7 +307,7 @@ a { color: var(--herbe); }
 /* ---- Pied ---- */
 .pied {
   border-top: 1px solid var(--ligne);
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.82rem;
   color: var(--ink-soft);
   text-align: center;
@@ -239,5 +323,8 @@ a { color: var(--herbe); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .carte { transition: none; }
+  .carte, .carte::before, .carte-titre, a, .filtre, #recherche, .retour {
+    transition: none;
+  }
+  .carte:hover::before { animation: none; background-position: 50% 0; }
 }
