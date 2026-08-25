@@ -8,16 +8,6 @@ proteines: 45
 congelable: true
 note: "Congèle bien (poulet + riz). Garder le brocoli à part."
 ingredients:
-  - qty: 800
-    unit: "g"
-    item: "poitrines de poulet, coupées en cubes"
-  - qty: 400
-    unit: "g"
-    item: "brocoli, en fleurons"
-  - qty: 2
-    unit: "tasse"
-    unitPluriel: "tasses"
-    item: "riz jasmin/calrose, cru"
   - qty: 60
     unit: "ml"
     item: "sauce soja"
@@ -34,6 +24,16 @@ ingredients:
   - qty: 1
     unit: "c. à soupe"
     item: "huile de sésame"
+  - qty: 800
+    unit: "g"
+    item: "poitrines de poulet, coupées en cubes"
+  - qty: 400
+    unit: "g"
+    item: "brocoli, en fleurons"
+  - qty: 2
+    unit: "tasse"
+    unitPluriel: "tasses"
+    item: "riz jasmin/calrose, cru"
 ---
 
 ## Préparation

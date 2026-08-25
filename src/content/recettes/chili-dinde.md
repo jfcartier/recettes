@@ -12,9 +12,33 @@ congelable: true
 star: true
 note: "Star du meal prep — congèle 3 mois. Macros sans riz."
 ingredients:
+  - qty: 1
+    unit: "c. à soupe"
+    item: "huile d'olive"
+  - qty: 1
+    unit: "gros"
+    item: "oignon, haché"
+  - qty: 1
+    item: "poivron rouge, haché"
+  - qty: 3
+    unit: "gousse"
+    unitPluriel: "gousses"
+    item: "d'ail, hachées"
   - qty: 900
     unit: "g"
     item: "dinde hachée"
+  - qty: 2
+    unit: "c. à soupe"
+    item: "poudre de chili"
+  - qty: 1
+    unit: "c. à soupe"
+    item: "cumin moulu"
+  - qty: 1
+    unit: "c. à thé"
+    item: "paprika fumé"
+  - qty: 1
+    unit: "c. à thé"
+    item: "sel"
   - qty: 2
     unit: "tasse"
     unitPluriel: "tasses"
@@ -29,30 +53,6 @@ ingredients:
   - qty: 400
     unit: "ml"
     item: "sauce tomate (passata)"
-  - qty: 1
-    unit: "gros"
-    item: "oignon, haché"
-  - qty: 1
-    item: "poivron rouge, haché"
-  - qty: 3
-    unit: "gousse"
-    unitPluriel: "gousses"
-    item: "d'ail, hachées"
-  - qty: 1
-    unit: "c. à soupe"
-    item: "huile d'olive"
-  - qty: 2
-    unit: "c. à soupe"
-    item: "poudre de chili"
-  - qty: 1
-    unit: "c. à soupe"
-    item: "cumin moulu"
-  - qty: 1
-    unit: "c. à thé"
-    item: "paprika fumé"
-  - qty: 1
-    unit: "c. à thé"
-    item: "sel"
   - qty: 250
     unit: "ml"
     item: "bouillon de poulet ou eau"

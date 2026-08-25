@@ -8,12 +8,6 @@ proteines: 35
 congelable: true
 note: "Congèle très bien. Macros avec riz."
 ingredients:
-  - qty: 900
-    unit: "g"
-    item: "hauts de cuisse de poulet, désossés (plus savoureux et moins secs au réchauffage que la poitrine)"
-  - qty: 400
-    unit: "g"
-    item: "tomates en conserve"
   - qty: 1
     unit: "gros"
     item: "oignon, haché"
@@ -24,9 +18,6 @@ ingredients:
   - qty: 1
     unit: "c. à soupe"
     item: "gingembre râpé"
-  - qty: 300
-    unit: "g"
-    item: "épinards (frais ou congelés)"
   - qty: 1
     unit: "c. à soupe"
     item: "cumin moulu"
@@ -39,6 +30,15 @@ ingredients:
   - qty: 1
     unit: "c. à thé"
     item: "garam masala"
+  - qty: 900
+    unit: "g"
+    item: "hauts de cuisse de poulet, désossés (plus savoureux et moins secs au réchauffage que la poitrine)"
+  - qty: 400
+    unit: "g"
+    item: "tomates en conserve"
+  - qty: 300
+    unit: "g"
+    item: "épinards (frais ou congelés)"
   - qty: 2
     unit: "tasse"
     unitPluriel: "tasses"
