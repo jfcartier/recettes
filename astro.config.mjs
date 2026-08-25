@@ -4,5 +4,5 @@ import { defineConfig } from 'astro/config';
 // Site publié à : https://jfcartier.github.io/recettes/
 export default defineConfig({
   site: 'https://jfcartier.github.io',
-  base: '/recettes',
+  base: '/recettes/',
 });
