@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const recettes = await getCollection('recettes');
+  return recettes.map((r) => ({ params: { slug: r.slug }, props: { recette: r } }));
+}
+
+const { recette } = Astro.props;
+const d = recette.data;
+const { Content } = await recette.render();
+const base = import.meta.env.BASE_URL;
+---
+<Base titre={`${d.titre} · Meal Prep`}>
+  <main class="wrap recette">
+    <a class="retour" href={base}>← Toutes les recettes</a>
+
+    <div class="carte-cuisine">{d.emoji} {d.cuisine} · {d.portions} portion{d.portions > 1 ? 's' : ''}</div>
+    <h1>{d.titre}</h1>
+    {d.note && <p class="sous">{d.note}</p>}
+
+    <div class="recette-meta">
+      {d.star && <span class="badge badge-star">⭐ Star du meal prep</span>}
+      {d.congelable
+        ? <span class="badge badge-gel">🧊 Congelable</span>
+        : <span class="badge badge-temps">❄️ Ne pas recongeler cuit</span>}
+      {d.tempsMinutes && <span class="badge badge-temps">⏱ {d.tempsMinutes} min</span>}
+    </div>
+
+    <div class="macros-bloc">
+      <div class="macro"><div class="v">{d.kcal}</div><div class="l">kcal / portion</div></div>
+      <div class="macro"><div class="v">{d.proteines} g</div><div class="l">protéines</div></div>
+      {d.glucides != null && <div class="macro"><div class="v">{d.glucides} g</div><div class="l">glucides</div></div>}
+      {d.lipides != null && <div class="macro"><div class="v">{d.lipides} g</div><div class="l">lipides</div></div>}
+      {d.fibres != null && <div class="macro"><div class="v">{d.fibres} g</div><div class="l">fibres</div></div>}
+    </div>
+
+    <div class="contenu">
+      <Content />
+    </div>
+  </main>
+</Base>

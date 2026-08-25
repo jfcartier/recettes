@@ -1,0 +1,28 @@
+---
+const { recette, href } = Astro.props;
+const d = recette.data;
+const cuisines = d.cuisine.toLowerCase();
+---
+<a
+  class="carte"
+  href={href}
+  data-titre={d.titre.toLowerCase()}
+  data-cuisine={cuisines}
+  data-gel={d.congelable ? "1" : "0"}
+>
+  <div class="carte-haut">
+    <span class="carte-emoji">{d.emoji}</span>
+    <div>
+      <div class="carte-cuisine">{d.cuisine}</div>
+      <h2 class="carte-titre">{d.titre}</h2>
+    </div>
+  </div>
+  {d.note && <p class="carte-note">{d.note}</p>}
+  <div class="carte-bas">
+    {d.star && <span class="badge badge-star">⭐ Star</span>}
+    <span class="badge badge-kcal">{d.kcal} kcal</span>
+    <span class="badge badge-prot">{d.proteines} g prot.</span>
+    {d.congelable && <span class="badge badge-gel">🧊 Congelable</span>}
+    {d.tempsMinutes && <span class="badge badge-temps">⏱ {d.tempsMinutes} min</span>}
+  </div>
+</a>

@@ -1,0 +1,83 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Carte from '../components/Carte.astro';
+
+const recettes = (await getCollection('recettes')).sort((a, b) => {
+  if (a.data.star !== b.data.star) return a.data.star ? -1 : 1;
+  return a.data.titre.localeCompare(b.data.titre, 'fr');
+});
+
+const cuisines = [...new Set(recettes.map((r) => r.data.cuisine))].sort();
+const base = import.meta.env.BASE_URL;
+---
+<Base titre="Carnet Meal Prep">
+  <header class="site-head">
+    <div class="wrap">
+      <p class="eyebrow">Déficit · Maintien musculaire</p>
+      <h1>Carnet Meal Prep</h1>
+      <p class="sous">Batch cook, congélation, ~150 g de protéines par jour.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="controls">
+      <input id="recherche" type="search" placeholder="Rechercher une recette…" aria-label="Rechercher" />
+      <div class="filtres" id="filtres">
+        <button class="filtre" data-f="all" aria-pressed="true">Toutes</button>
+        <button class="filtre" data-f="gel" aria-pressed="false">🧊 Congelables</button>
+        {cuisines.map((c) => (
+          <button class="filtre" data-f={`cuisine:${c.toLowerCase()}`} aria-pressed="false">{c}</button>
+        ))}
+      </div>
+    </div>
+
+    <p class="compte" id="compte">{recettes.length} recettes</p>
+
+    <div class="grille" id="grille">
+      {recettes.map((r) => (
+        <Carte recette={r} href={`${base}recette/${r.slug}/`} />
+      ))}
+      <p class="vide" id="vide" hidden>Aucune recette ne correspond. Essaie un autre terme.</p>
+    </div>
+  </main>
+
+  <script>
+    const input = document.getElementById('recherche');
+    const grille = document.getElementById('grille');
+    const cartes = [...grille.querySelectorAll('.carte')];
+    const compte = document.getElementById('compte');
+    const vide = document.getElementById('vide');
+    const boutons = [...document.querySelectorAll('.filtre')];
+    let filtreActif = 'all';
+
+    function appliquer() {
+      const q = input.value.trim().toLowerCase();
+      let visibles = 0;
+      cartes.forEach((c) => {
+        const titre = c.dataset.titre || '';
+        const cuisine = c.dataset.cuisine || '';
+        const gel = c.dataset.gel === '1';
+        const matchTexte = !q || titre.includes(q) || cuisine.includes(q);
+        let matchFiltre = true;
+        if (filtreActif === 'gel') matchFiltre = gel;
+        else if (filtreActif.startsWith('cuisine:')) matchFiltre = cuisine === filtreActif.slice(8);
+        const montrer = matchTexte && matchFiltre;
+        c.style.display = montrer ? '' : 'none';
+        if (montrer) visibles++;
+      });
+      compte.textContent = visibles + (visibles > 1 ? ' recettes' : ' recette');
+      vide.hidden = visibles !== 0;
+    }
+
+    input.addEventListener('input', appliquer);
+    boutons.forEach((b) => {
+      b.addEventListener('click', () => {
+        boutons.forEach((x) => x.setAttribute('aria-pressed', 'false'));
+        b.setAttribute('aria-pressed', 'true');
+        filtreActif = b.dataset.f;
+        appliquer();
+      });
+    });
+  </script>
+</Base>
