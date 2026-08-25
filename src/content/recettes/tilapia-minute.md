@@ -8,13 +8,17 @@ proteines: 30
 congelable: false
 tempsMinutes: 15
 note: "Cuisson fraîche, ne pas recongeler cuit. Ton poisson de la semaine."
+ingredients:
+  - qty: 150
+    unit: "g"
+    item: "filets de tilapia congelés (décongelés)"
+  - qty: 150
+    unit: "g"
+    item: "brocoli"
+  - qty: 200
+    unit: "g"
+    item: "patate douce"
 ---
-
-## Ingrédients
-
-- Filets de tilapia congelés (décongelés)
-- Brocoli
-- Patate douce
 
 ## Préparation
 

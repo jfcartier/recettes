@@ -8,14 +8,33 @@ proteines: 34
 congelable: true
 tempsMinutes: 30
 note: "Congèle parfaitement. Idéal pour la dinde blended."
+ingredients:
+  - qty: 900
+    unit: "g"
+    item: "dinde hachée"
+  - qty: 1
+    unit: "œuf"
+    unitPluriel: "œufs"
+    item: "(liant)"
+  - qty: 0.5
+    unit: "tasse"
+    item: "chapelure ou flocons d'avoine (liant)"
+  - qty: 1
+    unit: "c. à thé"
+    item: "ail en poudre"
+  - qty: 1
+    unit: "c. à thé"
+    item: "oignon en poudre"
+  - qty: 1
+    unit: "c. à thé"
+    item: "sel"
+  - qty: 0.5
+    unit: "c. à thé"
+    item: "poivre"
+  - qty: 1
+    unit: "c. à soupe"
+    item: "herbes séchées, au choix"
 ---
-
-## Ingrédients
-
-- Dinde hachée
-- 1 œuf (liant)
-- Chapelure ou flocons d'avoine (liant)
-- Ail, oignon en poudre, sel, poivre, herbes
 
 ## Préparation
 

@@ -7,20 +7,34 @@ kcal: 480
 proteines: 45
 congelable: true
 note: "Congèle bien (poulet + riz). Garder le brocoli à part."
+ingredients:
+  - qty: 800
+    unit: "g"
+    item: "poitrines de poulet, coupées en cubes"
+  - qty: 400
+    unit: "g"
+    item: "brocoli, en fleurons"
+  - qty: 2
+    unit: "tasse"
+    unitPluriel: "tasses"
+    item: "riz jasmin/calrose, cru"
+  - qty: 60
+    unit: "ml"
+    item: "sauce soja"
+  - qty: 3
+    unit: "gousse"
+    unitPluriel: "gousses"
+    item: "ail, haché"
+  - qty: 1
+    unit: "c. à soupe"
+    item: "gingembre râpé"
+  - qty: 2
+    unit: "c. à soupe"
+    item: "gochujang (au goût)"
+  - qty: 1
+    unit: "c. à soupe"
+    item: "huile de sésame"
 ---
-
-## Ingrédients
-
-- Poitrines de poulet, coupées en cubes
-- Brocoli, en fleurons
-- Riz jasmin/calrose
-
-**Marinade :**
-- Sauce soja
-- Ail haché
-- Gingembre râpé
-- Gochujang (au goût)
-- Filet d'huile de sésame
 
 ## Préparation
 
